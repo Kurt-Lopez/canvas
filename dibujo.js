@@ -1,37 +1,32 @@
-var d = document.getElementById("dibujito");
-var lienzo = d.getContext("2d");
-var lineas = 30;
-var l = 0;
-var yi, xf, yf, xi;
-var colorcito = "#FAA";
+export class Draw {
+	constructor() {
+		this.document = document.getElementById('root');
+		this.lienzo = this.document.getContext('2d');
+		this.lines = 1000;
+		this.coordinates = { yi: 0, xf: 0, yf: 0, xi: 0 };
+		this.color = '#FAA';
+	}
 
-for(l = 0; l < lineas; l++)
-{
-    yi = 10 * l;
-    xf = 10 * (l + 1);
-    dibujarLinea(colorcito, 0, yi, xf, 300);
-    console.log("linea " + l);
-}
+	draw(color, xinicial, yinicial, xfinal, yfinal) {
+		this.lienzo.beginPath();
+		this.lienzo.strokeStyle = color;
+		this.lienzo.moveTo(xinicial, yinicial);
+		this.lienzo.lineTo(xfinal, yfinal);
+		this.lienzo.stroke();
+		this.lienzo.closePath();
+	}
 
-for(l = 0; l < lineas; l++)
-{
-    xi = 10 * l;
-    yf = 10 * (l + 1);
-    dibujarLinea(colorcito, xi, 0, 300, yf);
-    console.log("linea " + l);
-}
+	drawCircle() {
+		for (let l = 0; l < this.lines; l++) {
+			this.coordinates.yi = 10 * l;
+			this.coordinates.xf = 10 * (l + 1);
+			this.draw(this.color, 0, this.coordinates.yi, this.coordinates.xf, 300);
+		}
 
-dibujarLinea(colorcito, 1, 1, 1, 299);
-dibujarLinea(colorcito, 1, 299, 299, 299);
-dibujarLinea(colorcito, 299, 1, 299, 299);
-dibujarLinea(colorcito, 1, 1, 299, 1);
-
-function dibujarLinea(color, xinicial, yinicial, xfinal, yfinal)
-{
-    lienzo.beginPath();
-    lienzo.strokeStyle = color;
-    lienzo.moveTo(xinicial, yinicial);
-    lienzo.lineTo(xfinal, yfinal);
-    lienzo.stroke();
-    lienzo.closePath();
+		for (let l = 0; l < this.lines; l++) {
+			this.coordinates.xi = 10 * l;
+			this.coordinates.yf = 10 * (l + 1);
+			this.draw(this.color, this.coordinates.xi, 0, 300, this.coordinates.yf);
+		}
+	}
 }
